@@ -91,7 +91,12 @@ Numbers marked **[TBC]** are predicted to EXIST with a stated rough scale, to be
 
 **H5 (decision-stage continuity with prior work).** `L_decide` for register-read pipelines (IMU MLC bank-switch, ToF/PCR register reads) is dominated by I2C transaction overhead, consistent with LSENS (I2C read protocol as dominant decision-stage contributor). Test: compare against a no-read binary-toggle floor per sensor (LSENS mlc-binary precedent). Equivalence/ordering via TOST or Mann-Whitney as appropriate.
 
-**Pre-registered falsifiable predictions left on record regardless of outcome.** Per LSENS practice, all hypotheses — including any falsified — remain in the published pre-registration chain. H3 is explicitly the one most at risk; its falsification is anticipated as a valid scientific outcome, not a failure.
+**H6 (SECONDARY / robustness — unit reproducibility; NOT part of the primary confirmatory family).** Two nominally-identical VL53L5CX units (both shipped in the VL53L5CX-SATEL package) produce statistically equivalent sense-stage floors `L_sense` under identical configuration and condition. Purpose: establish whether the ToF sense-stage floor is a property of the *modality* (transferable) or of the *specific board* (unit-bound), directly addressing the single-unit limitation of prior work (LSENS characterized one LSM6DSOX). Test: TOST equivalence on median `L_sense` between Unit A and Unit B at the primary config (4x4 @ chosen rate, idle), pre-registered margin set in §8. **Outcome interpretation:** equivalence SUPPORTED -> floor is modality-level, strengthens generalizability; equivalence NOT supported -> floor has a unit-specific component, reported as a measured limitation. Either outcome is reportable; neither is a failure.
+
+- **Scope guard:** H6 is explicitly a *unit-variation robustness check*, NOT a fourth sensor and NOT a second data point in the cross-sensor variance claim (H2). The two ToF units do not enter H1–H5. The primary design remains three sensors spanning three cadence regimes. The second unit's other role is failure-insurance spare (see DECISIONS D5).
+- **Anti-fishing commitment:** H6 is registered here, pre-data, with its margin and single comparison fixed in §8 before collection. No additional unit comparisons, configs, or conditions will be added to H6 post-hoc; if exploratory unit observations arise they will be labelled exploratory and excluded from confirmatory claims.
+
+**Pre-registered falsifiable predictions left on record regardless of outcome.** Per LSENS practice, all hypotheses — including any falsified — remain in the published pre-registration chain. H3 is explicitly the one most at risk; its falsification is anticipated as a valid scientific outcome, not a failure. H6 is secondary and reported separately from the primary confirmatory family.
 
 ---
 
@@ -108,7 +113,7 @@ Numbers marked **[TBC]** are predicted to EXIST with a stated rough scale, to be
 - Effect estimates: Hodges-Lehmann shift + percentile bootstrap CI (10,000 resamples).
 - Ordering tests: one-sided Mann-Whitney U.
 - Equivalence: TOST with pre-registered margin (set per measure).
-- Multiplicity: Holm-Bonferroni across the confirmatory family {H1 (x3), H2, H3, H5}; family and alpha frozen here.
+- Multiplicity: Holm-Bonferroni across the PRIMARY confirmatory family {H1 (x3), H2, H3, H5}; family and alpha frozen here. **H6 is secondary/robustness and is NOT included in this family** — it is reported separately with its own pre-registered TOST margin, so it neither inflates nor is corrected against the primary family.
 - Run-level reporting (per-run mean, run-mean SD, P95, P99, max); ECDFs and run-level boxplots for multimodal cells (LSENS lesson: multimodality is the story).
 
 ## 8. Open items to FREEZE before confirmatory data (do not collect until resolved)
@@ -117,6 +122,8 @@ Numbers marked **[TBC]** are predicted to EXIST with a stated rough scale, to be
 3. PCR detector settling-in-frames for the servo motion signature (measure; becomes H3 PCR settling term).
 4. `L_servo` mechanical actuation offset.
 5. Final block count, N per block, shuffle seed, exclusion ceiling, TOST margins.
+6. H6 unit-reproducibility: TOST equivalence margin for ToF `L_sense` (Unit A vs Unit B), and which physical board is designated Unit A (experimental) vs Unit B (comparison); the remaining role of the second unit is failure-insurance spare. Freeze before collecting any H6 data.
 
 ## 9. Amendment log
 - v0.1 (DRAFT, pre-data): initial structure. NOT yet frozen. No confirmatory data collected.
+- v0.2 (DRAFT, pre-data): added H6 secondary/robustness unit-reproducibility hypothesis (two VL53L5CX units), explicitly outside the primary confirmatory family and outside the cross-sensor variance claim. Added open item 6. Still NOT frozen; no confirmatory data collected.

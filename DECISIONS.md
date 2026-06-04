@@ -21,3 +21,10 @@ Chronological record of experimental design decisions. Append-only; do not edit 
 **Decision:** L_sense reported command-referenced; L_servo characterized once and stated separately; subtraction is a sensitivity check only.
 **Rationale:** Avoids baking an estimated offset into the primary measure.
 **Status:** Locked (revisit if L_servo proves large relative to fastest L_sense).
+
+## D5 — Two VL53L5CX units: one experimental, one spare; optional secondary reproducibility arm
+**Date:** 2026-06-03
+**Decision:** The VL53L5CX-SATEL package ships two ToF breakout boards. Unit A is the experimental sensor in the three-regime design (IMU / PCR / ToF). Unit B is held as a static-safe failure-insurance spare. Optionally, after the primary three-sensor campaign is collected and working, Unit B may serve a pre-registered SECONDARY unit-reproducibility check (H6) — TOST equivalence of L_sense between units at the primary config.
+**Rationale:** Redundancy exists only for the ToF (and its reorder lead time was long), so spare-first protects the build. A second identical-modality unit does NOT strengthen the cross-sensor variance claim (would repeat the "more sensors = stronger" error); it only characterizes unit-to-unit variation, which is a distinct, narrower question. Framed as a robustness arm it cleanly addresses the single-unit limitation that prior work (LSENS, one LSM6DSOX) had to list.
+**Guardrails:** H6 is pre-registered (pre-data) as secondary, kept out of the primary confirmatory multiplicity family and out of H1–H5, with margin and single comparison fixed before collection to prevent post-hoc fishing.
+**Status:** Locked (H6 execution optional, contingent on time after primary campaign).
